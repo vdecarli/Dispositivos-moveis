@@ -68,8 +68,7 @@ public class FormularioActivity extends AppCompatActivity {
                     contatoDAO.alterar(contato);
                 }
                 contatoDAO.close();
-
-
+                
                 //mostrar messagem
                 Toast.makeText(FormularioActivity.this, "Contato salvo com sucesso !",
                         Toast.LENGTH_LONG).show();
