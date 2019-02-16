@@ -44,7 +44,8 @@
         android:hint="SALVAR"
         android:id="@+id/formulario_btn"
         android:background="@color/colorPrimaryDark"
-        android:textSize="@android:dimen/app_icon_size" />
+        android:textSize="@android:dimen/app_icon_size"
+        android:fontFamily="sans-serif" />
 
 
 
