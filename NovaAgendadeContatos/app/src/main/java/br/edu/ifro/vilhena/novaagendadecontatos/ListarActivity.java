@@ -93,6 +93,7 @@ public class ListarActivity extends AppCompatActivity {
                 contatoDAO.deletar(contato);
                 contatoDAO.close();
 
+
                 caregarLista();
 
                 return false;

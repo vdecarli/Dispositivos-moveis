@@ -7,6 +7,7 @@ public class Contato implements Serializable {
     private String nome;
     private String email;
     private String telefone;
+    private String caminhoFoto;
 
 
     public int getId() {
@@ -39,6 +40,14 @@ public class Contato implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getCaminhoFoto() {
+        return caminhoFoto;
+    }
+
+    public void setCaminhoFoto(String caminhoFoto) {
+        this.caminhoFoto = caminhoFoto;
     }
 
     @Override
