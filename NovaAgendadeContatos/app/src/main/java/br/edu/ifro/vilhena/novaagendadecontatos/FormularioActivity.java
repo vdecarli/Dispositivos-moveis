@@ -24,7 +24,7 @@ import br.edu.ifro.vilhena.novaagendadecontatos.model.Contato;
 
 public class FormularioActivity extends AppCompatActivity {
 
-    public static final int CODIGO_CAMERA = 457;
+    public static final int CODIGO_CAMERA = 2;
 
     private Button formularioBtn;
     private TextInputEditText formularioNome;
@@ -52,9 +52,11 @@ public class FormularioActivity extends AppCompatActivity {
         formularioBtnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 caminhoFoto = getExternalFilesDir(null) + "/foto" + System.currentTimeMillis() + ".jpg";
                 File arquivoFoto = new File(caminhoFoto);
+
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
 
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -78,7 +80,6 @@ public class FormularioActivity extends AppCompatActivity {
             formularioNome.setText(contato.getNome());
             formularioTelefone.setText(contato.getTelefone());
             formularioEmail.setText(contato.getEmail());
-
             carregarimagem(contato.getCaminhoFoto());
         }
 
@@ -93,7 +94,11 @@ public class FormularioActivity extends AppCompatActivity {
                 contato.setNome(formularioNome.getText().toString());
                 contato.setEmail(formularioEmail.getText().toString());
                 contato.setTelefone(formularioTelefone.getText().toString());
-                contato.setCaminhoFoto((String) formularioFoto.getTag());
+                contato.setCaminhoFoto(formularioFoto.getTag().toString());
+
+                if (formularioFoto.getTag() != null) {
+                    contato.setCaminhoFoto(formularioFoto.getTag().toString());
+                }
 
                 ContatoDAO contatoDAO = new ContatoDAO(FormularioActivity.this);
 
@@ -104,7 +109,6 @@ public class FormularioActivity extends AppCompatActivity {
                     contatoDAO.inserir(contato);
                 }
 
-                contatoDAO.close();
 
                 Toast.makeText(FormularioActivity.this, "Contato Salvo con Sucesso", Toast.LENGTH_LONG).show();
 
@@ -115,7 +119,8 @@ public class FormularioActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == Activity.RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == CODIGO_CAMERA) {
                 carregarimagem(caminhoFoto);
@@ -126,7 +131,9 @@ public class FormularioActivity extends AppCompatActivity {
     private void carregarimagem(String caminhoFoto) {
 
         Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+
         if (bitmap != null) {
+
             Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
             formularioFoto.setImageBitmap(bitmapReduzido);
             formularioFoto.setScaleType(ImageView.ScaleType.FIT_XY);
